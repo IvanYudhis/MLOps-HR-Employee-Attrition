@@ -135,7 +135,14 @@ with col1:
 with col2:
     st.subheader("♾️ Korelasi Antar Fitur (Numerik)")
     fig, ax = plt.subplots(figsize=(8, 6))
-    sns.heatmap(df_filtered.corr(), cmap="coolwarm", center=0, ax=ax, annot=False, cbar_kws={'shrink': 0.6})
+    # Pastikan hanya kolom numerik yang digunakan
+    numeric_df = df_filtered.select_dtypes(include=['number'])
+    
+    # Cek dulu kalau tidak kosong
+    if not numeric_df.empty:
+        sns.heatmap(numeric_df.corr(), cmap="coolwarm", center=0, ax=ax)
+    else:
+        st.warning("⚠️ Tidak ada kolom numerik untuk menghitung korelasi.")
     ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha="right", fontsize=8)
     ax.set_yticklabels(ax.get_yticklabels(), fontsize=8)
     st.pyplot(fig)
