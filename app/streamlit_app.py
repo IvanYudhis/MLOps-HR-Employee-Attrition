@@ -1,5 +1,7 @@
 # app/streamlit_app.py
 
+import sklearn
+st.sidebar.info(f"✅ scikit-learn version: {sklearn.__version__}")
 import streamlit as st
 import pandas as pd
 import numpy as np
