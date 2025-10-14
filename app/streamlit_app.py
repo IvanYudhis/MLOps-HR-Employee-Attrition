@@ -637,13 +637,13 @@ if st.sidebar.button("🔍 Predict"):
     if pred == 1:
         st.sidebar.error(
             f"⚠️ Karyawan kemungkinan besar akan **RESIGN**\n\n"
-            f"**=> Probabilitas:** {proba_decimal} ({proba_percent}%) **<=**"
+            f"**> Probabilitas:** {proba_decimal} ({proba_percent}%) **<**"
         )
         st.sidebar.markdown("### ❓ Mengapa karyawan berpotensi **RESIGN** ❓")
     else:
         st.sidebar.success(
             f"✅ Karyawan kemungkinan akan **TETAP BEKERJA**\n\n"
-            f"**=> Probabilitas resign:** {proba_decimal} ({proba_percent}%) **<=**"
+            f"**> Probabilitas resign:** {proba_decimal} ({proba_percent}%) **<**"
         )
         st.sidebar.markdown("### ❓ Mengapa karyawan berpotensi **TETAP BEKERJA** ❓")
 
