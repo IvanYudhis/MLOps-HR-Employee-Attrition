@@ -85,7 +85,7 @@ with mlflow.start_run():
     # Log model to MLflow
     mlflow.sklearn.log_model(
         sk_model=model,
-        name="random_forest_model",
+        artifact_path="random_forest_model",
         input_example=sample_input,
         signature=signature
     )
