@@ -1,5 +1,5 @@
 # Core scientific stack
-numpy==2.2.2
+numpy==1.26.4
 pandas==2.2.3
 scipy==1.13.1
 
@@ -10,7 +10,7 @@ joblib==1.4.2
 # Visualization & logging
 matplotlib==3.9.2
 seaborn==0.13.2
-mlflow==2.16.2
+mlflow==2.11.3
 
 # Web app
 streamlit==1.38.0
