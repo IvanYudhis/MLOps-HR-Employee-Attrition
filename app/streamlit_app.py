@@ -623,26 +623,55 @@ try:
     proba = model.predict_proba(X_infer)[0][1]
     pred = int(proba >= 0.5)
 except Exception as e:
-    st.error(f"⚠️ Terjadi kesalahan saat scaling/prediksi: {e}")
-    st.stop()
+    st.sidebar.error(f"⚠️ Terjadi kesalahan saat scaling/prediksi: {e}")
+    st.sidebar.stop()
 
 # Tombol Prediksi
 if st.sidebar.button("🔍 Predict"):
     st.sidebar.header("Prediction Result")
     
-    proba_percent = round(proba * 100)
+    proba_percent = round(proba * 100, 2)
     proba_decimal = round(proba, 3)
     
+    # Menentukan hasil utama
     if pred == 1:
         st.sidebar.error(
-            f"⚠️ Karyawan kemungkinan besar akan **resign**\n\n"
-            f"**Probabilitas:** {proba_decimal} ({proba_percent}%)"
+            f"⚠️ Karyawan kemungkinan besar akan **RESIGN**\n\n"
+            f"**=> Probabilitas:** {proba_decimal} ({proba_percent}%) **<=**"
         )
+        st.sidebar.markdown("### ❓ Mengapa karyawan berpotensi **RESIGN** ❓")
     else:
         st.sidebar.success(
-            f"✅ Karyawan kemungkinan akan **tetap bekerja**\n\n"
-            f"**Probabilitas resign:** {proba_decimal} ({proba_percent}%)"
+            f"✅ Karyawan kemungkinan akan **TETAP BEKERJA**\n\n"
+            f"**=> Probabilitas resign:** {proba_decimal} ({proba_percent}%) **<=**"
         )
+        st.sidebar.markdown("### ❓ Mengapa karyawan berpotensi **TETAP BEKERJA** ❓")
+
+    # ------------------------------
+    # 📝 Penjelasan (Feature Importance Lokal)
+    # ------------------------------
+    # Feature Importance Global
+    importance_df = pd.DataFrame({
+        "Feature": feature_columns,
+        "Importance": model.feature_importances_
+    }).sort_values("Importance", ascending=False)
+    
+    # 5 fitur paling berpengaruh
+    top_features = importance_df.head(5)
+
+    # Nilai input user untuk fitur tersebut
+    user_values = {}
+    for f in top_features["Feature"]:
+        if f in input_df.columns:
+            user_values[f] = round(float(X_infer[f].iloc[0]), 2)
+
+    # Tabel Alasan
+    explain_df = pd.DataFrame({
+        "Feature": list(user_values.keys()),
+        "User Input": [f"{val:.2f}" for val in user_values.values()],
+        "Importance to the Prediction": [f"{imp * 100:.2f} %" for imp in top_features["Importance"]]
+    })
+    st.sidebar.dataframe(explain_df, use_container_width=True)
 
 # ------------------------------
 # FOOTER
