@@ -626,12 +626,23 @@ except Exception as e:
     st.error(f"⚠️ Terjadi kesalahan saat scaling/prediksi: {e}")
     st.stop()
 
+# Tombol Prediksi
 if st.sidebar.button("🔍 Predict"):
     st.sidebar.header("Prediction Result")
+    
+    proba_percent = round(proba * 100)
+    proba_decimal = round(proba, 3)
+    
     if pred == 1:
-        st.sidebar.error(f"⚠️ Karyawan kemungkinan besar akan **resign** (Probabilitas: {proba:.2f})")
+        st.sidebar.error(
+            f"⚠️ Karyawan kemungkinan besar akan **resign**\n\n"
+            f"**Probabilitas:** {proba_decimal} ({proba_percent}%)"
+        )
     else:
-        st.sidebar.success(f"✅ Karyawan kemungkinan akan **tetap bekerja** (Probabilitas resign: {proba:.2f})")
+        st.sidebar.success(
+            f"✅ Karyawan kemungkinan akan **tetap bekerja**\n\n"
+            f"**Probabilitas resign:** {proba_decimal} ({proba_percent}%)"
+        )
 
 # ------------------------------
 # FOOTER
