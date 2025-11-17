@@ -1,10 +1,13 @@
+# ===================
 # src/eda_analysis.py
+# ===================
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
 
-# --- 1. Load Dataset ---
+# --- Load Dataset ---
 DATA_PATH = os.path.join("dataset", "WA_Fn-UseC_-HR-Employee-Attrition.csv")
 df = pd.read_csv(DATA_PATH)
 
@@ -13,40 +16,40 @@ print("Dataset shape:", df.shape)
 print("\nFirst 5 rows:")
 print(df.head())
 
-# --- 2. Informasi Struktur Dataset ---
-print("\n=== Dataset Info ===")
+# --- Dataset Structure Informations ---
+print("\n=== Dataset Informations ===")
 print(df.info())
 
-# --- 3. Cek Missing Values ---
+# --- Check Missing Values ---
 print("\n=== Missing Values ===")
 print(df.isnull().sum())
 
-# --- 4. Statistik Deskriptif ---
+# --- Descriptive Statistics ---
 print("\n=== Descriptive Statistics ===")
 print(df.describe())
 
-# --- 5. Distribusi Target (Attrition) ---
+# --- Target Distributions (Attrition) ---
 plt.figure(figsize=(5,4))
-sns.countplot(data=df, x='Attrition', palette='coolwarm')
+sns.countplot(data=df, x='Attrition', hue='Attrition', palette='coolwarm', legend=False)
 plt.title('Distribusi Karyawan Berdasarkan Status Attrition')
 plt.xlabel('Attrition (Resign/Stay)')
 plt.ylabel('Jumlah')
 plt.tight_layout()
 plt.show()
 
-# --- 6. Korelasi antar fitur numerik ---
+# --- Correlation between numerical features ---
 plt.figure(figsize=(12,8))
 sns.heatmap(df.corr(numeric_only=True), annot=False, cmap='coolwarm')
 plt.title('Correlation Heatmap (Numerical Features)')
 plt.show()
 
-# --- 7. Distribusi Umur vs Attrition ---
+# --- Age vs Attrition Distributions ---
 plt.figure(figsize=(7,5))
-sns.boxplot(data=df, x='Attrition', y='Age', palette='viridis')
+sns.boxplot(data=df, x='Attrition', y='Age', hue='Attrition', palette='viridis', legend=False)
 plt.title('Distribusi Umur vs Status Attrition')
 plt.show()
 
-# --- 8. Insight Awal ---
+# --- Initial Insight ---
 print("\n=== Insight Awal ===")
 print("1. Data memiliki 1470 baris dan 35 kolom (beragam fitur HR).")
 print("2. Tidak ditemukan missing values pada dataset asli Kaggle.")

@@ -1,0 +1,25 @@
+2025/11/17 03:32:32 INFO mlflow.store.db.utils: Creating initial MLflow database tables...
+2025/11/17 03:32:32 INFO mlflow.store.db.utils: Updating database tables
+2025-11-17 03:32:32 INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+2025-11-17 03:32:32 INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2025-11-17 03:32:32 INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+2025-11-17 03:32:32 INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2025/11/17 03:32:32 INFO mlflow.store.db.utils: Creating initial MLflow database tables...
+2025/11/17 03:32:32 INFO mlflow.store.db.utils: Updating database tables
+2025-11-17 03:32:32 INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+2025-11-17 03:32:32 INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+[MLflow] Security middleware enabled with default settings (localhost-only). To allow connections from other hosts, use --host 0.0.0.0 and configure --allowed-hosts and --cors-allowed-origins.
+INFO:     Uvicorn running on http://0.0.0.0:5000 (Press CTRL+C to quit)
+INFO:     Started parent process [27]
+INFO:     Started server process [29]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Started server process [31]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Started server process [32]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Started server process [30]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.

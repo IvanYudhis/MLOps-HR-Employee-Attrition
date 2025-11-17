@@ -1,0 +1,66 @@
+services:
+# --- 🧠 MLflow Tracking Server ---
+  mlflow:
+    build: .
+    container_name: mlflow-server
+    env_file:
+      - .env
+    command: >
+      mlflow server
+      --backend-store-uri ${MLFLOW_BACKEND_URI}
+      --default-artifact-root ${MLFLOW_ARTIFACT_ROOT}
+      --host 0.0.0.0
+      --port 5000
+      --disable-security-middleware
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./mlflow_tracking:/mlflow_tracking
+    networks:
+      - mlops_net
+
+# --- 🧩 Model Trainer Service ---
+  trainer:
+    build: .
+    container_name: model-trainer
+    env_file:
+      - .env
+    depends_on:
+      mlflow:
+        condition: service_started
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+    command: >
+      sh -c "
+        /app/wait-for-mlflow.sh &&
+        echo '🚀 Starting model training...' &&
+        python src/train_model.py &&
+        echo '✅ Model training completed successfully & recorded in MLflow'
+      "
+    volumes:
+      - .:/app
+    networks:
+      - mlops_net
+
+# --- 🎨 Streamlit Frontend App ---
+  streamlit:
+    build: .
+    container_name: streamlit-app
+    env_file:
+      - .env
+    entrypoint: ["/app/entrypoint.sh"]
+    ports:
+      - "${STREAMLIT_PORT}:8501"
+    depends_on:
+      - mlflow
+    volumes:
+      - .:/app
+    networks:
+      - mlops_net
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+
+# --- 🌐 Shared Network ---
+networks:
+  mlops_net:
+    driver: bridge
